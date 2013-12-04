@@ -2,8 +2,7 @@ require "spec_helper"
 
 describe ParseRules do
   
-  describe 'Game Rules -' do
-    
+   
     before(:each) do
        @log_chunk = 
        [
@@ -19,7 +18,9 @@ describe ParseRules do
           "20:37 ------------------------------------------------------------"
          ]
     end
-     
+  
+  describe 'Game Rules -' do
+  
     it "parses a start game successfully" do
       ParseRules.begin_game_line?(@log_chunk.first).should be_true
     end
@@ -33,15 +34,39 @@ describe ParseRules do
       log_line[ParseRules.time_rule].should eql "15:00" 
     end
     
-    it "parses a kill successfully" do
-      ParseRules.kill_line?(@log_chunk[3]).should be_true
-    end
-    
+  end
+  
+  
+  describe 'Player Rules -' do
+  
     it "parses a player successfully" do
       ParseRules.player_line?(@log_chunk[4]).should be_true
     end
     
   end
+  
+  describe 'Kill Rules -' do
+    
+    it "parses a kill successfully" do     
+      ParseRules.kill_line?(@log_chunk[3]).should be_true
+    end
+    
+    # it "parses a killer successfully" do     
+    #      
+    #    end
+    
+    # it "parses a killed player successfully" do     
+    # 
+    #     end
+    #       
+    #     it "parses a death reason successfully" do     
+    #       
+    #     end
+    
+    
+  end
+  
+  
   
 
 end

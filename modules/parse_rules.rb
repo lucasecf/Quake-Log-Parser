@@ -1,6 +1,7 @@
 module ParseRules
   
-  #parse rules
+  
+  #game rules
   
   def self.begin_game_rule
     /InitGame/
@@ -14,15 +15,34 @@ module ParseRules
     /(\d)?\d:\d\d/
   end
   
+  
+  #kill rules
+  
   def self.kill_rule
-     /Kill:/
+     /:\s([^:]+)\skilled\s(.*?)\sby\s[a-zA-Z_]+/
   end
+  
+  def self.killer_rule #to be used after parsed the kill line with the kill_rule 
+     /(?<=:\s)(.*?)(?=\skilled)/
+  end
+  
+  def self.killed_rule #to be used after parsed the kill line with the kill_rule 
+     /(?<=killed\s)(.*?)(?=\sby)/
+  end
+  
+  def self.death_reason_rule #to be used after parsed the kill line with the kill_rule 
+     /(?<=by\s)(.*?)(?=$)/
+  end
+  
+
+  
+  #player rules
   
   def self.player_connect_rule
       /ClientUserinfoChanged: \d n\\(.*?)\\/
   end
   
-  def self.player_name_rule #to be used after parsed the player connect line with the rule above
+  def self.player_name_rule #to be used after parsed the player connect line with the player_connect_rule
       /(?<=\\)(.*?)(?=\\)/
   end
   

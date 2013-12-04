@@ -30,7 +30,7 @@ class QuakeLogParser
       
     end
 
-    #games.each {|game| puts game}
+    games.each {|game| puts game}
 
     games
     
