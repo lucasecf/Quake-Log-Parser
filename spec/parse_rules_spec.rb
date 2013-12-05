@@ -47,21 +47,28 @@ describe ParseRules do
   
   describe 'Kill Rules -' do
     
-    it "parses a kill successfully" do     
-      ParseRules.kill_line?(@log_chunk[3]).should be_true
+    before(:each) do
+       @log_line = @log_chunk[3]
+       @parsed_log_line = @log_line[ParseRules.kill_rule]
     end
     
-    # it "parses a killer successfully" do     
-    #      
-    #    end
+    it "parses a kill successfully" do     
+      ParseRules.kill_line?(@log_line).should be_true
+    end
     
-    # it "parses a killed player successfully" do     
-    # 
-    #     end
-    #       
-    #     it "parses a death reason successfully" do     
-    #       
-    #     end
+    it "parses a killer successfully" do     
+        @parsed_log_line[ParseRules.killer_rule].should eql "<world>"      
+    end
+        
+    it "parses a killed player successfully" do     
+        @parsed_log_line[ParseRules.killed_rule].should eql "Isgalamido" 
+    end
+              
+    it "parses a death reason successfully" do     
+        @parsed_log_line[ParseRules.death_reason_rule].should eql "MOD_TRIGGER_HURT"     
+    end
+    
+    
     
     
   end

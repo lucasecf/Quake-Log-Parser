@@ -9,3 +9,6 @@ If not installed yet, in terminal, type "gem install rspec".
 
 - install json gem if not installed yet. Used to print games in json format
 "gem install json".
+
+OBS: The "kills" attribute suggested in the example was changed for "score". The new "kills" attribute is an array of the "Kill" model, which holds the killer of that kill, the killed player, and the death reason.
+OBS2: killed by the world means that the player get a death score, but also gets a -1 kill as a penalty

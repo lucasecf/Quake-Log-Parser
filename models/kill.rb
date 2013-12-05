@@ -7,5 +7,9 @@ class Kill
      @killed = killed
      @death_reason = death_reason
    end
+   
+   def to_s
+     "#{killer} killed #{killed} by #{death_reason}"
+   end
   
 end
