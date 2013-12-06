@@ -1,18 +1,19 @@
 class Player
-  attr_accessor :name, :kills, :deaths
+  attr_accessor :name, :kills, :normal_deaths, :suicides
   
-  def initialize(name, kills = 0, deaths = 0)
+  def initialize(name, kills = 0, normal_deaths = 0, suicides = 0)
     @name = name
     @kills = kills
-    @deaths = deaths
+    @normal_deaths = normal_deaths
+    @suicides = suicides
   end
   
   def to_s
-    "kills: #{self.kills}, deaths:#{deaths}, score: #{self.score}"
+    "kills: #{self.kills}, normal_deaths:#{self.normal_deaths}, suicides:#{self.suicides}, score: #{self.score}"
   end
   
   def score
-    self.kills - self.deaths
+    self.kills - self.suicides
   end
   
 end

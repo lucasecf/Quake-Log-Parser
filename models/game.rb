@@ -5,7 +5,7 @@ require_relative 'player'
 
 class Game
   
-  attr_accessor :name, :start_time, :end_time, :players, :kills, :score, :kills_delegate
+  attr_accessor :name, :start_time, :end_time, :players, :kills
   
   def initialize(log_string_array, name = "game_1", kills_delegate = nil)
     
@@ -13,7 +13,6 @@ class Game
     @kills_delegate = kills_delegate
     @players = {}
     @kills = []
-    @score = {}
     
     if log_string_array.count > 1
       
@@ -33,11 +32,8 @@ class Game
           kill = Kill.new parsed_line[ParseRules.killer_rule], parsed_line[ParseRules.killed_rule], parsed_line[ParseRules.death_reason_rule]
           @kills << kill
           
-
-          #todo: remove kill when killed by world
-          #@players[kill.killer].kills += 1
-          #@players[kill.killed].deaths += 1 
-          
+          update_score(kill)
+                    
         end
         
       end
@@ -46,11 +42,13 @@ class Game
   end
   
   def to_hash
-    hash = {}
-    self.instance_variables.each {|var| hash[var.to_s.delete("@")] = self.instance_variable_get(var) }
-    hash.delete("name")
-    hash.delete("kills_delegate")
-    hash
+    { 
+      :start_time => self.start_time, 
+      :end_time => self.end_time, 
+      :total_kills => self.total_kills, 
+      :players => self.players_by_score,
+      :kills => self.kills
+    }
   end
   
   def to_s
@@ -61,16 +59,62 @@ class Game
     self.kills.count
   end
   
-  # def players_names
-  #      @players.map{|player| player.name}
-  #   end
-  
-  def increment_score(player)
-    self.score[player] = self.score[player].to_i + 1
+  def players_by_score
+    players_array = self.players.sort_by{ |k, v| v.score}.reverse!
+    players_array.map {|player_array| player_array[1] }
   end
   
-  def decrement_score(player)
-    self.score[player] = self.score[player].to_i - 1
+  def players_by_score
+    players_array = self.players.sort_by{ |k, v| v.score}.reverse!
+    players_array.map {|player_array| player_array[1] }
   end
+  
+  
+  def kills_by_reason
+    
+    kills_by_reason_hash = {}
+    self.kills.each do |kill|
+      kills_by_reason_hash[kill.death_reason] = kills_by_reason_hash[kill.death_reason].to_i + 1
+    end
+    
+    kills_by_reason_hash.sort_by{ |k, v| v}.reverse!
+    
+  end
+  
+  def self.merge_players(games)
+    
+    players_hash = {}
+    games.each do |game|
+      
+      game.players.each do |player_name, player| 
+         
+         if players_hash[player_name].nil?
+           players_hash[player_name] = (Player.new player.name, player.kills, player.normal_deaths, player.suicides)
+         else
+           inserted_player = players_hash[player_name]
+           inserted_player.kills += player.kills
+           inserted_player.normal_deaths += player.normal_deaths
+           inserted_player.suicides += player.suicides
+         end
+         
+      end
+      
+    end
+    
+    players_array = players_hash.sort_by{ |k, v| v.score}.reverse!
+    players_array.map {|player_array| player_array[1] }
+  end
+  
+  private
+  def update_score(kill)
+      if kill.killer == kill.killed or kill.killer == "<world>"  #Considering that world kills is suicides
+        @players[kill.killed].suicides += 1 
+      else                                  #normal kill
+        @players[kill.killer].kills += 1
+        @players[kill.killed].normal_deaths += 1 
+      end
+  end
+    
+   
   
 end

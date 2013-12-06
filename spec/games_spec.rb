@@ -2,7 +2,7 @@ require "spec_helper"
 
 describe Game do
   
-  before :each do
+  before :all do
     @log_lines = QuakeLogParser.read_file('spec/log_chunks_for_test/one_game_example.log')
     @game = Game.new @log_lines
   end
@@ -22,6 +22,81 @@ describe Game do
       it { @game.should have(4).players }
     end
     
+    context 'players has a kills count' do  
+      it { @game.players["Dono da Bola"].kills.should eql 16}
+    end
+    
+    context 'players has a death count' do  
+      it { @game.players["Dono da Bola"].normal_deaths.should eql 20}
+    end
+    
+    context 'players has a suicide count' do  #suicide is the number of times that the player was killed by the <world>
+      it { @game.players["Dono da Bola"].suicides.should eql 11}
+    end
+    
   end
+  
+
+  describe '#kills_by_reason' do
+    
+    before :all do
+        @kills_by_reason = @game.kills_by_reason
+        @test_kill = @kills_by_reason.first #test_kill is a array of 2 elements: [DEATH_REASON, number of deaths]
+    end
+
+      context "general ranking of kills" do
+        
+        it "is ordered by deaths" do  
+          test_kill2 = @kills_by_reason[1]
+          test_kill3 = @kills_by_reason[2] 
+          
+          @test_kill[1].should > test_kill2[1]
+          test_kill2[1].should > test_kill3[1]
+        end
+        
+        it "calculates kills correctly" do   
+          @test_kill[0].should eql "MOD_ROCKET_SPLASH"
+          @test_kill[1].should eql 51
+        end
+
+      end
+    
+  end
+  
+  
+  describe '.merge_players' do
+    
+    before :all do
+        @games = QuakeLogParser.parse_games('spec/log_chunks_for_test/two_game_example.log')
+        @players_ranking = Game.merge_players(@games)
+        @test_player = @players_ranking.first
+     end
+
+      context "general ranking of players" do
+        
+        it "is ordered by score" do  
+          test_player2 = @players_ranking[1]
+          test_player3 = @players_ranking[2] 
+          
+          @test_player.score.should > test_player2.score
+          test_player2.score.should > test_player3.score   
+        end
+        
+        it "calculates kills correctly" do   
+          @test_player.kills.should eql 30
+        end
+        
+        it "calculates deaths correctly" do   
+          @test_player.normal_deaths.should eql 8
+        end
+        
+        it "calculates suicides correctly" do   
+          @test_player.suicides.should eql 7
+        end
+
+      end
+    
+  end
+  
   
 end

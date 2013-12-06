@@ -1,0 +1,72 @@
+<html>
+<body>
+<h1>**** #TASK 1 + 2 ****</h1>
+<h2>Total of games: <%= @games.count %></h2>
+
+<h3>General ranking of all games:</h3>
+
+<table border="1">
+  <tr>
+    <th></th>
+    <th>Kills</th>
+    <th>Deaths</th>
+    <th>Suicides</th>
+    <th>Score</th>
+  </tr>
+
+  <% @ranking_players.each do |player| %>
+      <tr>
+        <th> <%= player.name %> </th>
+        <td> <%= player.kills %> </td>
+        <td> <%= player.normal_deaths %> </td>
+        <td> <%= player.suicides %></td>
+        <td> <%= player.score %></td>
+      </tr>
+  <% end %>
+
+</table>
+
+<br />
+<br />
+<h3>Games list:</h3>
+(each game is ordered by score)
+
+<% @games.each do |game| %>
+
+    <h4><%= game.name %>:</h4>
+
+    <ul>
+      <li><b>Total kills</b>: <%= game.total_kills %>, <b>Start Time</b>: <%= game.start_time %>, <b>End Time</b>: <%= game.end_time %></li>
+    </ul>
+
+
+    <table border="1">
+      <tr>
+        <th></th>
+        <th>Kills</th>
+        <th>Deaths</th>
+        <th>Suicides</th>
+        <th>Score</th>
+      </tr>
+
+      <% game.players_by_score.each do |player| %>
+          <tr>
+            <th> <%= player.name %> </th>
+            <td> <%= player.kills %> </td>
+            <td> <%= player.normal_deaths %> </td>
+            <td> <%= player.suicides %></td>
+            <td> <%= player.score %></td>
+          </tr>
+      <% end %>
+
+    </table>
+
+<% end %>
+
+
+<br />
+<br />
+
+
+</body>
+</html>

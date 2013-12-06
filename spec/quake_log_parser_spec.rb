@@ -2,7 +2,7 @@ require "spec_helper"
 
 describe QuakeLogParser do
 
-  before :each do
+  before :all do
     @log_lines = QuakeLogParser.read_file('spec/log_chunks_for_test/three_game_example.log')
   end
   
@@ -16,7 +16,7 @@ describe QuakeLogParser do
   
   describe '.parse_games' do
     
-    before :each do
+    before :all do
        @games = QuakeLogParser.parse_games('spec/log_chunks_for_test/three_game_example.log')
     end
     
@@ -24,6 +24,8 @@ describe QuakeLogParser do
       it { @games.should have(3).items } #in this example, the read log has exactly 3 game logs, so the array must have 3 objects
     end
   end
+  
+  
   
 
 end
