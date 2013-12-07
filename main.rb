@@ -4,8 +4,22 @@ require_relative 'modules/os_detector'
 
 #parsing log
 
-@games = QuakeLogParser.parse_games('game_logs/games.log')
-@ranking_players = Game.merge_players(@games)
+file_name = nil
+ARGV.each { |argument| file_name = argument }
+
+
+
+begin
+  file_name = 'game_logs/games.log' if file_name.nil?
+  @games = QuakeLogParser.parse_games(file_name)
+  @ranking_players = Game.merge_players(@games)
+rescue 
+  puts "No file with name '#{file_name}' was found"
+  exit
+end
+
+
+
 
 
 

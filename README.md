@@ -21,7 +21,7 @@ Some adjustments were made in the Task 1 expected result example, in order to be
 ```  
 12:13 Kill: 3 3 7: Dono da Bola killed Dono da Bola by MOD_ROCKET_SPLASH
 ```
-* And finally, <b>Score</b> is calculated by the kills of the player, minus his suicides (penalty).
+* And finally, Score is calculated by the kills of the player, minus his suicides (penalty).
 
 
 So, the output of each game is something like this:
@@ -71,3 +71,10 @@ ruby main.rb
 ```
 
 This will write the output of the parser inside the console, and will also open a web-browser with a `html` output, in order to provide a better visualization. This html file is generated through a `.erb` template.
+
+
+OBS: You can pass a log file as a parameter to the script, like in `ruby main.rb game_logs/three_game_example.log`. If no file is passed in the parameter, the `folder_project/game_logs/games.log` will be used as default.
+
+OBS2: If more than one file is passed in parameter, only the last will be considered..
+
+
