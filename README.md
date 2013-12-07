@@ -10,9 +10,9 @@ This project was made using just pure Ruby, without any external dependencies. T
 
 Some adjustments were made in the Task 1 expected result example, in order to better fit in the modeling used, which had more informations than required extracted from the log. The program keeps track of not only the kills of each player, but he's kills, deaths, suicides and final score. It's important to highlight what each of this attributes means:
 
-* <b>Kills</b> is the absolute count of kills of the player, without any penalty;
-* <b>Normal Deaths</b> is the absolute amount of times a player dies by the hands of another player;
-* <b>Suicides</b> is the number of times a player is killed by the world, like this:
+* Kills is the absolute count of kills of the player, without any penalty;
+* Normal Deaths is the absolute amount of times a player dies by the hands of another player;
+* Suicides is the number of times a player is killed by the world, like this:
 ```  
 12:15 Kill: 1022 4 19: <world> killed Zeh by MOD_FALLING
 ```
@@ -61,7 +61,7 @@ rspec spec
 ```
 You can also user the `--format nested` to see more informations about the tests
 
-<b>Obs:</b> type `gem install rspec` if you don't have it installed
+Obs: type `gem install rspec` if you don't have it installed
 
 
 ### Output
