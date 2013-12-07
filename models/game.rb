@@ -46,13 +46,13 @@ class Game
       :start_time => self.start_time, 
       :end_time => self.end_time, 
       :total_kills => self.total_kills, 
-      :players => self.players_by_score,
-      :kills => self.kills
+      :players => self.players_by_score.map {|player| player.name},
+      :kills => self.players_by_score
     }
   end
   
   def to_s
-    "#{self.name} : #{self.to_hash.to_json}"
+    "#{self.name} : #{JSON.pretty_generate(self.to_hash)}"
   end
   
   def total_kills

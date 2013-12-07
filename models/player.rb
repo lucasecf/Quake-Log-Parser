@@ -9,7 +9,7 @@ class Player
   end
   
   def to_s
-    "kills: #{self.kills}, normal_deaths:#{self.normal_deaths}, suicides:#{self.suicides}, score: #{self.score}"
+    "#{self.name} -> kills: #{self.kills}, normal_deaths:#{self.normal_deaths}, suicides:#{self.suicides}, score: #{self.score}"
   end
   
   def score
