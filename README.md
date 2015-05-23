@@ -3,12 +3,13 @@ Quake Game log parser
 
 ## About
 
-This project was made using just pure Ruby, without any external dependencies. The project development was totally   behaviour-driven (BDD), using the ruby rspec gem to write the specs. The Tasks 1, 2 and also the Plus were accomplished successfully.
+This is just a small project from when I was learning Ruby. The project development was totally behaviour-driven (BDD), using the ruby rspec gem to write the specs. 
 
+The idea is just to parse a log file from the Quake game (file included, [games.log](games.log)), extracting information about the matches and showing it.
 
 ## Developer notes
 
-Some adjustments were made in the Task 1 expected result example, in order to better fit in the modeling used, which had more informations than required extracted from the log. The program keeps track of not only the kills of each player, but he's kills, deaths, suicides and final score. It's important to highlight what each of this attributes means:
+The program keeps track of not only the kills of each player, but he's kills, deaths, suicides and final score. It's important to highlight what each of this attributes means:
 
 * Kills is the absolute count of kills of the player, without any penalty;
 * Normal Deaths is the absolute amount of times a player dies by the hands of another player;
@@ -49,8 +50,7 @@ One of the biggest concerns through the development of this project was the main
 
 The basic of parsing is made using Regular Expressions. A module class was created to gather and centralize all the expressions used to recognize every single event in the log, like a kill event, player connect event, game begin event, etc. So, if a adaptation in the log structure was required, the maintainer will only have to modify this file, without the need of digging further in the parsing logic of another classes.
 
-
-* This file with the Parse Rules can be found in `project_folder/modules/parse_rules.rb`
+* This file with the Parse Rules can be found in [here](modules/parse_rules.rb)
 
 ## Running the parser
 
@@ -73,7 +73,7 @@ ruby main.rb
 This will write the output of the parser inside the console, and will also open a web-browser with a `html` output, in order to provide a better visualization. This html file is generated through a `.erb` template.
 
 
-OBS: You can pass a log file as a parameter to the script, like in `ruby main.rb game_logs/three_game_example.log`. If no file is passed in the parameter, the `folder_project/game_logs/games.log` will be used as default.
+OBS: You can pass a log file as a parameter to the script, like in `ruby main.rb game_logs/three_game_example.log`. If no file is passed in the parameter, the [games.log](games.log) will be used as default.
 
 OBS2: If more than one file is passed in parameter, only the last will be considered..
 
